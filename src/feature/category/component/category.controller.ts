@@ -1,12 +1,27 @@
-import { Body, Controller, Get, Header, Param, Post, Query, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Header,
+  Param,
+  Post,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { CategoryDto } from '../dto/category.dto';
 import { CreateCategoryDto } from '../dto/create-category.dto';
+import { FindallCategoryService } from '../service/findall-category.service';
 
 @Controller('category')
 export class CategoryController {
+  constructor(
+    private readonly findAllCategoriService: FindallCategoryService,
+  ) {}
+
   @Get()
-  findALLCategories(): string {
-    return 'hello from category';
+  async findALLCategories(): Promise<CategoryDto[]> {
+    const response = await this.findAllCategoriService.getAllCategories();
+    return response;
   }
 
   //Use @Query when you want to filter data
@@ -19,8 +34,8 @@ export class CategoryController {
 
   //Use @Param when you want to get or do an operacion over an specific object
   @Get(':id')
-  findCategoryById(@Param('id') id: string): string {
-    return `find category with id ${id}`;
+  async findCategoryById(@Param('id') id: number): Promise<CategoryDto> {
+    return await this.findAllCategoriService.getCategoryById(id);
   }
 
   @Post()

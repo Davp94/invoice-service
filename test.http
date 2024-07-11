@@ -1,5 +1,10 @@
 ###GET ALL CATEGORIES
-GET http://localhost:3000/category/query?name=123123 HTTP/1.1
+GET http://localhost:3000/category HTTP/1.1
+content-type: application/json
+Authorization: 'token'
+
+###GET CATEGORy BY ID
+GET http://localhost:3000/category/2 HTTP/1.1
 content-type: application/json
 
 ###SAVE CATEGORY
