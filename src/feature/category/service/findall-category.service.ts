@@ -1,35 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { CategoryDto } from '../dto/category.dto';
+import { Repository } from 'typeorm';
+import { Category } from 'src/entity/category';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class FindallCategoryService {
-  categoriesList: CategoryDto[];
-  constructor() {
-    this.categoriesList = [
-      {
-        id: 1,
-        name: 'categoria1',
-        description: 'desc categoria1',
-      },
-      {
-        id: 2,
-        name: 'categoria2',
-        description: 'desc categoria2',
-      },
-      {
-        id: 3,
-        name: 'categoria3',
-        description: 'desc categoria3',
-      },
-    ];
-  }
+  constructor(
+    @InjectRepository(Category)
+    private categoryRepository: Repository<Category>,
+  ) {}
 
   async getAllCategories(): Promise<CategoryDto[]> {
-    return this.categoriesList;
+    const categories: Category[] = await this.categoryRepository.find();
+    const categoriesListDto: CategoryDto[] = [];
+    return categoriesListDto;
   }
 
   async getCategoryById(id: number): Promise<CategoryDto> {
-    const category = this.categoriesList.find((res) => res.id == id);
-    return category;
+    const category: Category = await this.categoryRepository.findOne({
+      where: { cat_id: id },
+    });
+    const categoryDto: CategoryDto = { id: 1, name: '', description: '' };
+    return categoryDto;
   }
 }

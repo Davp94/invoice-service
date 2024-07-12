@@ -8,6 +8,8 @@ import { ProductModule } from './feature/product/product.module';
 import { InvoiceProductModule } from './feature/invoice_product/invoice_product.module';
 import { AuthMiddleware } from './common/middleware/auth.middleware';
 import { CategoryController } from './feature/category/component/category.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
@@ -16,6 +18,16 @@ import { CategoryController } from './feature/category/component/category.contro
     CategoryModule,
     ProductModule,
     InvoiceProductModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: '123456',
+      database: 'db_invoice',
+      entities: [],
+      synchronize: true,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -24,4 +36,6 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(AuthMiddleware).forRoutes(CategoryController);
   }
+
+  constructor(private datasource: DataSource) {}
 }
