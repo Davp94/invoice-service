@@ -7,7 +7,6 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Category } from './category';
-import { Invoice } from './invoice';
 
 @Entity()
 export class Product {
@@ -18,7 +17,7 @@ export class Product {
   pro_stock: string;
 
   @Column()
-  pro_price: string;
+  pro_price: number;
 
   //   @ManyToMany(() => Invoice)
   //   invoice: Invoice[];

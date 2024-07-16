@@ -5,7 +5,7 @@ import { UpdateService } from './service/update.service';
 import { DeleteService } from './service/delete.service';
 import { FindallCategoryService } from './service/findall-category.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Category } from 'src/entity/category';
+import { entities } from 'src/entity';
 
 @Global()
 @Module({
@@ -16,7 +16,7 @@ import { Category } from 'src/entity/category';
     DeleteService,
   ],
   controllers: [CategoryController],
-  imports: [TypeOrmModule.forFeature([Category])],
+  imports: [TypeOrmModule.forFeature(entities)],
   exports: [
     FindallCategoryService,
     CreateService,

@@ -12,8 +12,16 @@ export class FindallCategoryService {
   ) {}
 
   async getAllCategories(): Promise<CategoryDto[]> {
-    const categories: Category[] = await this.categoryRepository.find();
+    const categories: Category[] = await this.categoryRepository.find({});
     const categoriesListDto: CategoryDto[] = [];
+    for (const category of categories) {
+      const categoryDto: CategoryDto = {
+        id: category.cat_id,
+        name: category.cat_name,
+        description: category.cat_description,
+      };
+      categoriesListDto.push(categoryDto);
+    }
     return categoriesListDto;
   }
 
@@ -21,7 +29,11 @@ export class FindallCategoryService {
     const category: Category = await this.categoryRepository.findOne({
       where: { cat_id: id },
     });
-    const categoryDto: CategoryDto = { id: 1, name: '', description: '' };
+    const categoryDto: CategoryDto = {
+      id: category.cat_id,
+      name: category.cat_name,
+      description: category.cat_description,
+    };
     return categoryDto;
   }
 }
