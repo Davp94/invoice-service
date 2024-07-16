@@ -13,13 +13,10 @@ import { Product } from 'src/entity/product';
 
 @Injectable()
 export class FindallProductService {
-  manager: EntityManager;
-  constructor(private readonly datasource: DataSource) {
-    this.manager = datasource.manager;
-  }
+  constructor() {}
 
-  async getAllProducts(): Promise<Product[]> {
-    const products: Product[] = await this.manager.find(Product, {
+  async getAllProducts(manager: EntityManager): Promise<Product[]> {
+    const products: Product[] = await manager.find(Product, {
       relations: { category: true },
       select: {
         pro_id: true,
