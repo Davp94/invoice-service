@@ -1,21 +1,29 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Header,
   Param,
   Post,
+  Put,
   Query,
   Req,
 } from '@nestjs/common';
 import { CategoryDto } from '../dto/category.dto';
 import { CreateCategoryDto } from '../dto/create-category.dto';
 import { FindallCategoryService } from '../service/findall-category.service';
+import { CreateCategoryService } from '../service/create-category.service';
+import { DeleteCategoryService } from '../service/delete-category.service';
+import { UpdateCategoryService } from '../service/update-category.service';
 
 @Controller('category')
 export class CategoryController {
   constructor(
     private readonly findAllCategoriService: FindallCategoryService,
+    private readonly createCategoryService: CreateCategoryService,
+    private readonly deleteCategoryService: DeleteCategoryService,
+    private readonly updateCategoryService: UpdateCategoryService,
   ) {}
 
   @Get()
@@ -39,11 +47,28 @@ export class CategoryController {
   }
 
   @Post()
-  saveCategory(
+  async saveCategory(
     @Req() req,
     @Body() createCategoryDto: CreateCategoryDto,
-  ): string {
-    console.log(req);
-    return `saving category with data ${JSON.stringify(createCategoryDto)}`;
+  ): Promise<CategoryDto> {
+    return await this.createCategoryService.createCategory(createCategoryDto);
+  }
+
+  @Put(':id')
+  async updateCategory(
+    @Req() req,
+    @Body() createCategoryDto: CreateCategoryDto,
+    @Param() categoryId: number,
+  ): Promise<number> {
+    const result = await this.updateCategoryService.updateCategory(
+      createCategoryDto,
+      categoryId,
+    );
+    return result;
+  }
+
+  @Delete(':id')
+  async deleteCategory(@Req() req, @Param() categoryId: number): Promise<void> {
+    await this.deleteCategoryService.delete(categoryId);
   }
 }
