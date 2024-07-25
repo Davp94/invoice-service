@@ -23,6 +23,6 @@ export class Product {
   //   invoice: Invoice[];
 
   @ManyToOne(() => Category)
-  @JoinColumn({ name: 'cat_id', referencedColumnName: 'category' })
+  @JoinColumn({ name: 'cat_id', referencedColumnName: 'cat_id' })
   category: Category;
 }

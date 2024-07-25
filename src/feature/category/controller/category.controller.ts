@@ -23,7 +23,7 @@ export class CategoryController {
     private readonly findAllCategoriService: FindallCategoryService,
     private readonly createCategoryService: CreateCategoryService,
     private readonly deleteCategoryService: DeleteCategoryService,
-    private readonly updateCategoryService: UpdateCategoryService,
+    private readonly updateCategoryService: UpdateCategoryService
   ) {}
 
   @Get()
@@ -47,28 +47,18 @@ export class CategoryController {
   }
 
   @Post()
-  async saveCategory(
-    @Req() req,
-    @Body() createCategoryDto: CreateCategoryDto,
-  ): Promise<CategoryDto> {
+  async saveCategory(@Req() req, @Body() createCategoryDto: CreateCategoryDto): Promise<CategoryDto> {
     return await this.createCategoryService.createCategory(createCategoryDto);
   }
 
   @Put(':id')
-  async updateCategory(
-    @Req() req,
-    @Body() createCategoryDto: CreateCategoryDto,
-    @Param() categoryId: number,
-  ): Promise<number> {
-    const result = await this.updateCategoryService.updateCategory(
-      createCategoryDto,
-      categoryId,
-    );
+  async updateCategory(@Req() req, @Body() createCategoryDto: CreateCategoryDto, @Param('id') categoryId: number): Promise<number> {
+    const result = await this.updateCategoryService.updateCategory(createCategoryDto, categoryId);
     return result;
   }
 
   @Delete(':id')
-  async deleteCategory(@Req() req, @Param() categoryId: number): Promise<void> {
+  async deleteCategory(@Req() req, @Param('id') categoryId: number): Promise<void> {
     await this.deleteCategoryService.delete(categoryId);
   }
 }

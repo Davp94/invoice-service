@@ -1,5 +1,5 @@
 import { Global, Module } from '@nestjs/common';
-import { CategoryController } from './component/category.controller';
+import { CategoryController } from './controller/category.controller';
 
 import { FindallCategoryService } from './service/findall-category.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -10,19 +10,9 @@ import { DeleteCategoryService } from './service/delete-category.service';
 
 @Global()
 @Module({
-  providers: [
-    FindallCategoryService,
-    CreateCategoryService,
-    UpdateCategoryService,
-    DeleteCategoryService,
-  ],
+  providers: [FindallCategoryService, CreateCategoryService, UpdateCategoryService, DeleteCategoryService],
   controllers: [CategoryController],
   imports: [TypeOrmModule.forFeature(entities)],
-  exports: [
-    FindallCategoryService,
-    CreateCategoryService,
-    UpdateCategoryService,
-    DeleteCategoryService,
-  ],
+  exports: [FindallCategoryService, CreateCategoryService, UpdateCategoryService, DeleteCategoryService],
 })
 export class CategoryModule {}

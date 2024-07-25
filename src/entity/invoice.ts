@@ -30,6 +30,6 @@ export class Invoice {
   //   product: Product[];
 
   @ManyToOne(() => Customer)
-  @JoinColumn({ name: 'cus_id', referencedColumnName: 'customer' })
+  @JoinColumn({ name: 'cus_id', referencedColumnName: 'cus_id' })
   customer: Customer;
 }

@@ -12,6 +12,20 @@ POST http://localhost:3000/category HTTP/1.1
 content-type: application/json
 
 {
-    "name": "category1",
-    "description": "desc category1"
+    "name": "category4",
+    "description": "desc category4"
 }
+
+###UPDATE CATEGORY
+PUT http://localhost:3000/category/2 HTTP/1.1
+content-type: application/json
+
+{
+    "name": "category2Updated",
+    "description": "desc category2 updated"
+}
+
+###DELETE CATEGORY
+DELETE http://localhost:3000/category/4 HTTP/1.1
+content-type: application/json
+

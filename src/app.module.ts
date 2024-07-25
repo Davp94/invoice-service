@@ -7,9 +7,10 @@ import { CategoryModule } from './feature/category/category.module';
 import { ProductModule } from './feature/product/product.module';
 import { InvoiceProductModule } from './feature/invoice_product/invoice_product.module';
 import { AuthMiddleware } from './common/middleware/auth.middleware';
-import { CategoryController } from './feature/category/component/category.controller';
+import { CategoryController } from './feature/category/controller/category.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
+import { entities } from './entity';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { DataSource } from 'typeorm';
       password: '123456',
       database: 'db_invoice',
       logging: true,
-      entities: ['./entity'],
+      entities: entities,
       synchronize: true,
     }),
   ],
