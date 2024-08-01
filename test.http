@@ -3,8 +3,8 @@ GET http://localhost:3000/category HTTP/1.1
 content-type: application/json
 Authorization: 'token'
 
-###GET CATEGORy BY ID
-GET http://localhost:3000/category/2 HTTP/1.1
+###GET CATEGORy BY ID+
+GET http://localhost:3000/category/1 HTTP/1.1
 content-type: application/json
 
 ###SAVE CATEGORY
@@ -14,15 +14,15 @@ content-type: application/json
 {
     "name": "category4",
     "description": "desc category4"
-}
+}+
 
 ###UPDATE CATEGORY
-PUT http://localhost:3000/category/2 HTTP/1.1
+PUT http://localhost:3000/category/1 HTTP/1.1
 content-type: application/json
 
 {
-    "name": "category2Updated",
-    "description": "desc category2 updated"
+    "name": "category 1 updated",
+    "description": "desc category1 updated"
 }
 
 ###DELETE CATEGORY
