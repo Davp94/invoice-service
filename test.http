@@ -14,7 +14,7 @@ content-type: application/json
 {
     "name": "category4",
     "description": "desc category4"
-}+
+}
 
 ###UPDATE CATEGORY
 PUT http://localhost:3000/category/1 HTTP/1.1
@@ -29,3 +29,11 @@ content-type: application/json
 DELETE http://localhost:3000/category/4 HTTP/1.1
 content-type: application/json
 
+###LOGIN
+POST http://localhost:3000/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "1234567",
+    "password": "dsadsadas"
+}

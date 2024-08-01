@@ -11,6 +11,7 @@ import { CategoryController } from './feature/category/controller/category.contr
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { entities } from './entity';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { entities } from './entity';
       entities: entities,
       synchronize: true,
     }),
+    AuthenticationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
