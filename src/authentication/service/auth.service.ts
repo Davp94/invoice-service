@@ -54,10 +54,10 @@ export class AuthService {
       }
     }
 
-    //VALIDATE PASSWORD
-    if (customer.cus_password != data.password) {
-      throw new Error('Las contraseñas no coinciden');
-    }
+    //TODO VALIDATE PASSWORD DCRYPTING
+    // if (customer.cus_password != data.password) {
+    //   throw new Error('Las contraseñas no coinciden');
+    // }
     return customer && customer.cus_id > 0;
   }
 }
