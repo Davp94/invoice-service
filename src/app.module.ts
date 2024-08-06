@@ -12,6 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { entities } from './entity';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { CryptoModule } from './common/module/crypto/crypto.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
       synchronize: true,
     }),
     AuthenticationModule,
+    CryptoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

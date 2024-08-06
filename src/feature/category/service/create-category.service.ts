@@ -16,8 +16,7 @@ export class CreateCategoryService {
     const categoryToCreated = new Category();
     categoryToCreated.cat_name = category.name;
     categoryToCreated.cat_description = category.description;
-    const categoryCreated: Category =
-      await this.categoryRepository.save(categoryToCreated);
+    const categoryCreated: Category = await this.categoryRepository.save(categoryToCreated);
     const categoryDto: CategoryDto = {
       id: categoryCreated.cat_id,
       name: categoryCreated.cat_name,

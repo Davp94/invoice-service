@@ -37,3 +37,22 @@ content-type: application/json
     "username": "1234567",
     "password": "dsadsadas"
 }
+
+###OPERATIONS CUSTOMER
+
+###CREATE CUSTOMER
+POST http://localhost:3000/customer HTTP/1.1
+content-type: application/json
+
+{
+    "cus_names": "test test",
+    "cus_lastname": "testap testam",
+    "cus_password": "123456",
+    "cus_nit": "123456",
+    "cus_razon_social": "TEST",
+    "email": "test@test.com"
+}
+
+### LIST CUSTOMERS
+GET http://localhost:3000/customer HTTP/1.1
+content-type: application/json
