@@ -5,13 +5,15 @@ import { Customer } from 'src/entity/customer';
 import { AuthDataDto } from '../dto/auth-data.dto';
 import { JwtService } from '@nestjs/jwt';
 import { AuthDto } from '../dto/auth.dto';
+import { CryptoService } from 'src/common/module/crypto/crypto.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(Customer)
     private customerRepository: Repository<Customer>,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private cryptoService: CryptoService,
   ) {}
 
   async authUser(data: AuthDto): Promise<AuthDataDto> {
@@ -54,10 +56,9 @@ export class AuthService {
       }
     }
 
-    //TODO VALIDATE PASSWORD DCRYPTING
-    // if (customer.cus_password != data.password) {
-    //   throw new Error('Las contraseñas no coinciden');
-    // }
+    if (customer.cus_password != (await this.cryptoService.encryptData(data.password))) {
+      throw new Error('Las contraseñas no coinciden');
+    }
     return customer && customer.cus_id > 0;
   }
 }
