@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Customer } from 'src/entity/customer';
@@ -6,6 +6,7 @@ import { AuthDataDto } from '../dto/auth-data.dto';
 import { JwtService } from '@nestjs/jwt';
 import { AuthDto } from '../dto/auth.dto';
 import { CryptoService } from 'src/common/module/crypto/crypto.service';
+import { CustomHttpException } from 'src/common/exception/custom-http-exception';
 
 @Injectable()
 export class AuthService {
@@ -52,12 +53,12 @@ export class AuthService {
       } catch (error) {
         console.log('🚀 ~ AuthService ~ validateUser ~ customer:', customer);
         console.log('🚀 ~ AuthService ~ validateUser ~ error:', error);
-        throw new Error('Usuario no encontrado');
+        throw new CustomHttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
       }
     }
 
     if (customer.cus_password != (await this.cryptoService.encryptData(data.password))) {
-      throw new Error('Las contraseñas no coinciden');
+      throw new CustomHttpException('Las contraseñas no coinciden', HttpStatus.NOT_FOUND);
     }
     return customer && customer.cus_id > 0;
   }
