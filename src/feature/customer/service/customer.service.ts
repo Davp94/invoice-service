@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CryptoService } from 'src/common/module/crypto/crypto.service';
 import { Customer } from 'src/entity/customer';
 import { Repository } from 'typeorm';
+import { CustomerDto } from '../dto/customer.dto';
+import { CreateCustomerDto } from '../dto/create-customer.dto';
 
 @Injectable()
 export class CustomerService {
@@ -12,7 +14,7 @@ export class CustomerService {
     private cryptoService: CryptoService
   ) {}
 
-  async getAllCustomer(): Promise<Customer[]> {
+  async getAllCustomer(): Promise<CustomerDto[]> {
     const customer: Customer[] = await this.customerRepository.find({});
     customer.map(cus => {
       //PASSWORD ENCRYPTED
@@ -23,9 +25,9 @@ export class CustomerService {
     return customer;
   }
 
-  async saveCustomer(customer: Customer): Promise<Customer> {
-    customer.cus_password = await this.cryptoService.encryptData(customer.cus_password);
-    const customerCreated: Customer = await this.customerRepository.save(customer);
+  async saveCustomer(createCustomerDto: CreateCustomerDto): Promise<CustomerDto> {
+    createCustomerDto.cus_password = await this.cryptoService.encryptData(createCustomerDto.cus_password);
+    const customerCreated: Customer = await this.customerRepository.save(createCustomerDto);
 
     return customerCreated;
   }
