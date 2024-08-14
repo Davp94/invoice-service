@@ -7,9 +7,9 @@ import {
   MoreThan,
   Repository,
 } from 'typeorm';
-import { Category } from 'src/entity/category';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from 'src/entity/product';
+import { PaginationSortingDto } from 'src/common/dto/pagination-sorting.dto';
+import { ProductDto } from '../dto/product.dto';
 
 @Injectable()
 export class FindallProductService {
@@ -26,10 +26,20 @@ export class FindallProductService {
           cat_name: true,
         },
       },
-      where: {
-        pro_price: In([10, 100]),
-      },
     });
+    return products;
+  }
+
+
+  async getAllProductsPagination(manager: EntityManager, paginationSortingDto: PaginationSortingDto): Promise<ProductDto[]> {
+    const products: Product[] = await manager.find(Product, {
+      relations: { category: true },
+      order: { [paginationSortingDto.sortParam]: paginationSortingDto.sortDirection },
+      take: Number(paginationSortingDto.take),
+      skip: paginationSortingDto.take * paginationSortingDto.page,
+    });
+    // take: 10 -- page: 0      0-10
+    // take: 10 -- page: 1      11-20
     return products;
   }
 }

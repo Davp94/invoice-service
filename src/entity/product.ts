@@ -14,7 +14,10 @@ export class Product {
   pro_id: number;
 
   @Column()
-  pro_stock: string;
+  pro_name: string;
+
+  @Column()
+  pro_stock: number;
 
   @Column()
   pro_price: number;
