@@ -62,5 +62,5 @@ GET http://localhost:3000/product HTTP/1.1
 content-type: application/json
 
 ### FINDALL PRODUCTS PAGINATION
-GET http://localhost:3000/product/pagination?take=5&page=1&sortDirection=DESC&sortParam=pro_id HTTP/1.1
+GET http://localhost:3000/product/pagination?take=1&page=0&sortDirection=DESC&sortParam=pro_id HTTP/1.1
 content-type: application/json
