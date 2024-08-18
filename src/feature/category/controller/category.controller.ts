@@ -9,6 +9,7 @@ import {
   Put,
   Query,
   Req,
+  Res,
 } from '@nestjs/common';
 import { CategoryDto } from '../dto/category.dto';
 import { CreateCategoryDto } from '../dto/create-category.dto';
@@ -16,6 +17,8 @@ import { FindallCategoryService } from '../service/findall-category.service';
 import { CreateCategoryService } from '../service/create-category.service';
 import { DeleteCategoryService } from '../service/delete-category.service';
 import { UpdateCategoryService } from '../service/update-category.service';
+import { Response } from 'express';
+import { ReportCategoryService } from '../service/report-category.service';
 
 @Controller('category')
 export class CategoryController {
@@ -23,7 +26,8 @@ export class CategoryController {
     private readonly findAllCategoriService: FindallCategoryService,
     private readonly createCategoryService: CreateCategoryService,
     private readonly deleteCategoryService: DeleteCategoryService,
-    private readonly updateCategoryService: UpdateCategoryService
+    private readonly updateCategoryService: UpdateCategoryService,
+    private readonly reportCategoryService: ReportCategoryService
   ) {}
 
   @Get()
@@ -60,5 +64,14 @@ export class CategoryController {
   @Delete(':id')
   async deleteCategory(@Req() req, @Param('id') categoryId: number): Promise<void> {
     await this.deleteCategoryService.delete(categoryId);
+  }
+
+  @Get('pdf/report')
+  async getPdfReport(@Res() response: Response): Promise<any> {
+    const pdfDoc = await this.reportCategoryService.createPdfReport();
+    response.setHeader('Content-Type', 'application/pdf');
+    pdfDoc.info.Title = 'Categories';
+    pdfDoc.pipe(response);
+    pdfDoc.end();
   }
 }
